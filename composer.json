@@ -1,0 +1,19 @@
+{
+    "name": "guzbyte/ticket",
+    "description": "This package creates a well structured ready to use ticketing system for users and administrative management",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Guzbyte",
+            "email": "ezeozuechiagoziem@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Guzbyte\\Ticket\\": "src/"
+        }
+    }
+}
