@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/summernote/summernote-bs4.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -78,7 +82,7 @@
     <!-- Brand Logo -->
     <a href="{{ route("guzbyte.agent.ticket.index") }}" class="brand-link">
       <img src="{{ asset('guz_ticket/dist/img/AdminLTELogo.png') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Ticket V1</span>
+      <span class="brand-text font-weight-light">Ticket V-1.0.0</span>
     </a>
 
     <!-- Sidebar -->
@@ -104,15 +108,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route("guzbyte.agent.ticket.opened") }}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
-                Open Tickets
+                Opened Tickets
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/kanban.html" class="nav-link">
+            <a href="{{ route("guzbyte.agent.ticket.closed") }}" class="nav-link">
               <i class="nav-icon fas fa-columns"></i>
               <p>
                 Closed Tickets
@@ -214,6 +218,15 @@
 <script src="{{ asset('guz_ticket/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('guz_ticket/dist/js/pages/dashboard.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/pdfmake/vfs_fonts.js') }}"></script>
 
   <script>
   $(function () {
@@ -222,6 +235,23 @@
       height: 200,
     })
   })
+</script>
+<script>
+  $(function () {
+    // $("#datatable_print").DataTable({
+    //   "responsive": true, "lengthChange": false, "autoWidth": false,
+    //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#datatable').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
 </script>
 </body>
 </html>

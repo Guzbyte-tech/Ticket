@@ -9,7 +9,7 @@
 
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header"><h5>Your tickets</h5></div>
+            <div class="card-header"><h5>Closed tickets</h5></div>
             <div class="card-body">
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success alert-block">

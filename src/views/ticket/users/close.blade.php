@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-          <div class="card-header"><h5>Your tickets</h5></div>
+          <div class="card-header"><h5>List of Closed tickets</h5></div>
           <div class="card-body">
               @if ($message = Session::get('success'))
               <div class="alert alert-success alert-block">
@@ -99,7 +99,6 @@
                               <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                   <a href="{{ route("guzbyte.ticket.show", [$ticket->id, $ticket->slug]) }}" class="dropdown-item" type="button"><i class="fa fa-eye"></i> View ticket</a>
                                   @if ($ticket->status_id == 1)
-                                    <a href="{{ route("guzbyte.ticket.edit", [$ticket->id]) }}" class="dropdown-item" type="button"><i class="fa fa-edit"></i> Edit ticket</a>
                                     <a href="{{ route("guzbyte.ticket.close", [$ticket->id]) }}" class="dropdown-item" type="button"><i class="fa fa-times"></i> Close ticket</a>
                                   @endif
                               </div>

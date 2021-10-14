@@ -63,76 +63,77 @@
                         <br>
                         @if ($ticket->status_id == 1)
                             @if (auth()->user()->id == $ticket->user_id)
-                                <a href="{{ route("guzbyte.ticket.edit") }}" class="btn btn-outline-primary">Edit ticket</a>
+                                <a href="{{ route("guzbyte.ticket.edit", [$ticket->id]) }}" class="btn btn-outline-primary">Edit ticket</a>
                             @endif
                         @endif
 
                         <hr>
-                        <h5>Messages</h5>
-                        @foreach ($comments as $comment)
-                            @if ($comment->sender == 1)
-                                <div class="d-block mb-3 p-3 " style="width: 90%; float: left; border-radius: 10px; background-color: #f2f2f2;">
-                                    <div>
-                                        {!! $comment->message !!}
+                        <h5>Replies</h5>
+                        @if (count($comments) > 0)
+                            @foreach ($comments as $comment)
+                                @if ($comment->sender == 1)
+                                    <div class="d-block mb-3 p-3 " style="width: 90%; float: left; border-radius: 10px; background-color: #f2f2f2;">
+                                        <div>
+                                            {!! $comment->message !!}
+                                            @if (count(json_decode($comment->attachment, true)) > 0)
+                                            <span class="font-weight-bold">Attachment</span> <br>
+                                            @for ($i = 0; $i < count(json_decode($comment->attachment, true)); $i++)
+                                                <a href="{{ asset('guz_ticket/attachment/'.json_decode($comment->attachment, true)[$i]) }}" target="_blank">{{ json_decode($comment->attachment, true)[$i] }}</a> &nbsp;&nbsp;
+                                            @endfor
+                                        @endif
+                                        </div>
+                                        
+                                        <small class="d-block w-100 mt-1">
+                                            {{ App\User::find($ticket->agent_id)->name }} <br>
+                                            <i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
+                                    </div>
+                                @else
+
+                                    <div class="d-block float-right mb-3 p-3 "  style="width: 90%; border-radius: 10px; background-color: #dbf3c6; color: #5c6356; position: relative;">
+                                        <div class="mb-2">
+                                            {!! $comment->message !!}
+                                        </div>
                                         @if (count(json_decode($comment->attachment, true)) > 0)
-                                        <span class="font-weight-bold">Attachment</span> <br>
-                                        @for ($i = 0; $i < count(json_decode($comment->attachment, true)); $i++)
-                                            <a href="{{ asset('guz_ticket/attachment/'.json_decode($comment->attachment, true)[$i]) }}" target="_blank">{{ json_decode($comment->attachment, true)[$i] }}</a> &nbsp;&nbsp;
-                                        @endfor
-                                    @endif
+                                            <span class="font-weight-bold">Attachment</span> <br>
+                                            @for ($i = 0; $i < count(json_decode($comment->attachment, true)); $i++)
+                                                <a href="{{ asset('guz_ticket/attachment/'.json_decode($comment->attachment, true)[$i]) }}" target="_blank">{{ json_decode($comment->attachment, true)[$i] }}</a> &nbsp;&nbsp;
+                                            @endfor
+                                        @endif
+                                        <small class="float-right"><i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
                                     </div>
                                     
-                                    <small class="d-block w-100 mt-1">
-                                        {{ App\User::find($ticket->agent_id)->name }} <br>
-                                        <i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
-                                </div>
-                            @else
-
-                                <div class="d-block float-right mb-3 p-3 "  style="width: 90%; border-radius: 10px; background-color: #dbf3c6; color: #5c6356; position: relative;">
-                                    <div class="mb-2">
-                                        {!! $comment->message !!}
-                                    </div>
-                                    @if (count(json_decode($comment->attachment, true)) > 0)
-                                        <span class="font-weight-bold">Attachment</span> <br>
-                                        @for ($i = 0; $i < count(json_decode($comment->attachment, true)); $i++)
-                                            <a href="{{ asset('guz_ticket/attachment/'.json_decode($comment->attachment, true)[$i]) }}" target="_blank">{{ json_decode($comment->attachment, true)[$i] }}</a> &nbsp;&nbsp;
-                                        @endfor
-                                    @endif
-                                    <small class="float-right"><i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
-                                </div>
-                                
-                            @endif
-                        @endforeach
-                        
-
-                        
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
                 @if ($ticket->status_id == 1)
-                <div class="row">
-                    <div class="col-g-10">
-                        <hr>
-                        <form action="{{ route("guzbyte.ticket.reply") }}" enctype="multipart/form-data" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $id }}">
-                            <div class="form-group">
-                                <textarea name="message" class="form-control" id="summernote" ></textarea>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="">Select Attacment</label>
-                                <input type="file" name="attachment[]" class="form-control-file" multiple>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary">Submit</button>
-                            </div>
+                    @if (count($comments) > 0)
+                    <div class="row">
+                        <div class="col-g-10">
+                            <hr>
+                            <form action="{{ route("guzbyte.ticket.reply") }}" enctype="multipart/form-data" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $id }}">
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" id="summernote" ></textarea>
+                                </div>
+    
+    
+                                <div class="form-group">
+                                    <label for="">Select Attacment</label>
+                                    <input type="file" name="attachment[]" class="form-control-file" multiple>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Submit</button>
+                                </div>
+                                
+                            </form>
                             
-                        </form>
-                        
+                        </div>
                     </div>
-                </div>
+                    @endif
                 @endif
                 
                     

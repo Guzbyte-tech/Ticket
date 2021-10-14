@@ -9,12 +9,10 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
         Route::post('ticket/reply', 'TicketController@reply')->name("guzbyte.ticket.reply")->middleware(["checkUser"]);
         Route::get('ticket/show/{id}/{slug}', 'TicketController@show')->name('guzbyte.ticket.show')->middleware(["checkUser"]);
         Route::get('ticket/close/{id}', 'TicketController@close')->name('guzbyte.ticket.close');
-        
-    });
-});
-Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
-    Route::group(['middleware' => ['web', 'auth']], function(){
         Route::get('ticket/edit/{id}', 'TicketController@edit')->name('guzbyte.ticket.edit')->middleware("user_agent_access");
+        Route::patch('ticket/edit/{id}', 'TicketController@update')->name('guzbyte.ticket.update')->middleware("user_agent_access");
+        Route::get('ticket/open', 'TicketController@opened')->name('guzbyte.ticket.opened');
+        Route::get('ticket/close', 'TicketController@closed')->name('guzbyte.ticket.closed');
     });
 });
 //Ticket Agents
@@ -24,6 +22,10 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAgent'], fun
         Route::get('ticket/agent/show/{id}/{slug}', 'TicketAgentController@show')->name('guzbyte.ticket.agent.show')->middleware(["is_agent"]);
         Route::post('ticket/agent/reply/{id}', 'TicketAgentController@reply')->name('guzbyte.ticket.agent.reply');
         Route::get('ticket/agent/close/{id}', 'TicketAgentController@close')->name('guzbyte.ticket.agent.close');
+        Route::get('ticket/agent/edit/{id}', 'TicketAgentController@edit')->name('guzbyte.ticket.agent.edit')->middleware(["user_agent_access"]);
+        Route::patch('ticket/agent/update/{id}', 'TicketAgentController@update')->name('guzbyte.ticket.agent.update')->middleware(["user_agent_access"]);
+        Route::get('ticket/agent/open', 'TicketAgentController@opened')->name('guzbyte.agent.ticket.opened');
+        Route::get('ticket/agent/close', 'TicketAgentController@closed')->name('guzbyte.agent.ticket.closed');
     });
 });
 

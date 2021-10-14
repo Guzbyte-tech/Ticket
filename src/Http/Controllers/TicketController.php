@@ -36,7 +36,7 @@ class TicketController extends Controller
         return view("ticket::ticket.users.index")->with([
             "count" => 1,
             "ticketCount" => $ticketCount,
-            "tickets" => $response
+            "tickets" => $response,
         ]);
     }
 
@@ -48,7 +48,7 @@ class TicketController extends Controller
     public function create()
     {
         $categories = TicketCategory::all();
-        $ticketCount = Ticket::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
+        $ticketCount = TicketComment::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
         return view("ticket::ticket.users.create")->with([
             "categories" => $categories,
             "ticketCount" => 0,
@@ -84,8 +84,8 @@ class TicketController extends Controller
             }
          }
 
-        Ticket::create([
-            "title" => $request->time,
+        $ticket = Ticket::create([
+            "title" => $request->title,
             "user_id" => auth()->user()->id,
             "name" => $request->name,
             "email" => $request->email,
@@ -97,6 +97,23 @@ class TicketController extends Controller
             "attachment" =>  json_encode($data),
             "message" => $request->message
         ]);
+
+        
+
+        $agentUserId = TicketAgent::find($assignedAgent)->user_id;
+        $agentEmail = User::find($agentUserId)->email;
+        $agentName = User::find($agentUserId)->name;
+        $content = [
+            "ticket" => $ticket,
+            "content" => $request->message,
+            "agent" => $agentName,
+         ];
+
+        Mail::send('ticket::emails.agent-reply', $content, function($message) use ($agentEmail, $agentName, $request) {
+            $message->to($agentEmail, $agentName)->subject
+               ("New Ticket- ".$request->title.'');
+            $message->from(config("ticket.mail_from"), config("ticket.app_name"));
+         });
 
         
 
@@ -204,7 +221,15 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        
+        $ticket = Ticket::findOrFail($id);
+        $ticketCount = TicketComment::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
+        return view("ticket::ticket.users.edit")->with([
+            "ticket" => $ticket,
+            "ticketCount" => $ticketCount,
+            "categories" => TicketCategory::all(),
+            "priorities" => TicketPriority::all()
+        ]);
+
     }
 
     /**
@@ -216,7 +241,41 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "name" => ['required'],
+            "email" => ['required'],
+            "title" => ["required"],
+            "category" => ["required"],
+            "message" => ["required"],
+            "attachment.*" => ['nullable', 'mimes:jpg,jpeg,png,bmp,tiff |max:2048']
+        ]);
+        $validator->validate();
+        $data = [];
+        $ticket = Ticket::findOrFail($id);
+        if($request->hasfile('attachment'))
+         {
+            foreach($request->file('attachment') as $file)
+            {
+                $name = time().'.'.$file->extension();
+                $file->move(public_path().'/guz_ticket/attachment', $name);  
+                $data[] = $name;  
+            }
+         }
+
+        $ticket->update([
+            "title" => $request->title,
+            "name" => $request->name,
+            "email" => $request->email,
+            "slug" => Str::slug($request->title),
+            "category_id" => $request->category,
+            "attachment" =>  json_encode($data),
+            "message" => $request->message
+        ]);
+
+        return redirect()->route("guzbyte.ticket.index")->with([
+            "success" => "Your ticket has been recieved we will get back to you shortly",
+            "ticketCount" => 0,
+        ]);
     }
 
     /**
@@ -232,6 +291,9 @@ class TicketController extends Controller
 
     public function autoAssignAgent($category){
         $possibleAgents = TicketAgent::whereCategory($category)->get();
+        if(count($possibleAgents) == 0){
+            return null;
+        }
         $agentsIDs = [];
         $summation = [];
         foreach($possibleAgents as $agents){
@@ -269,5 +331,37 @@ class TicketController extends Controller
             return redirect()->route("guzbyte.ticket.index");
         }
         return abort(404);
+    }
+
+    public function opened(){
+        $tickets = Ticket::whereUserId(auth()->user()->id)->whereStatusId(1)->orderBy("id", "desc")->get();
+        $helper = new Helper();
+        $response = \collect();
+        foreach($tickets as $ticket){
+            $response->push($ticket->setAttribute("unread", $helper->unreadMessages(auth()->user()->id,$ticket->id)));
+        }
+        //return dd($response);
+        $ticketCount = TicketComment::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
+        return view("ticket::ticket.users.open")->with([
+            "count" => 1,
+            "ticketCount" => $ticketCount,
+            "tickets" => $response,
+        ]);
+    }
+
+    public function closed(){
+        $tickets = Ticket::whereUserId(auth()->user()->id)->whereStatusId(2)->orderBy("id", "desc")->get();
+        $helper = new Helper();
+        $response = \collect();
+        foreach($tickets as $ticket){
+            $response->push($ticket->setAttribute("unread", $helper->unreadMessages(auth()->user()->id,$ticket->id)));
+        }
+        //return dd($response);
+        $ticketCount = TicketComment::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
+        return view("ticket::ticket.users.open")->with([
+            "count" => 1,
+            "ticketCount" => $ticketCount,
+            "tickets" => $response,
+        ]);
     }
 }

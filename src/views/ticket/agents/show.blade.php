@@ -54,7 +54,7 @@
                         @endif
                      
                         @if (auth()->user()->id == $ticket->user_id)
-                            <a href="#" class="btn btn-outline-primary">Edit ticket</a>
+                            <a href="{{ route("guzbyte.ticket.edit", [$ticket->id]) }}" class="btn btn-outline-primary">Edit ticket</a>
                         @endif
 
                         <hr>
