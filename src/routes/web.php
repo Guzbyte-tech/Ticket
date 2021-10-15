@@ -32,7 +32,6 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAgent'], fun
 //Ticket Manager
 Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAdmin'], function(){
     Route::group(['middleware' => ['web', 'auth', 'is_ticket_super_admin']], function(){
-        Route::get('ticket/admin', 'AdminTicketController@index')->name('guzbyte.admin.ticket.index');
         //Category
         Route::get('ticket/admin/category', 'CategoryController@index')->name('guzbyte.admin.ticket.category');
         Route::get('ticket/admin/create', 'CategoryController@create')->name('guzbyte.admin.ticket.category.create');
@@ -65,8 +64,23 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAdmin'], fun
         Route::patch('ticket/admin/agents/update/{id}', 'AgentController@update')->name("guzbyte.admin.ticket.agent.update");
         Route::get('ticket/admin/agents/deactivate/{id}', 'AgentController@deactivate')->name("guzbyte.admin.ticket.agent.deactivate");
         Route::get('ticket/admin/agents/activate/{id}', 'AgentController@activate')->name("guzbyte.admin.ticket.agent.activate");
-        
+        Route::get('ticket/admin/agents/ticket/{id}', 'AgentController@getAgentTicket')->name("guzbyte.admin.agent.ticket.all");
 
+        //Ticket Starts
+        Route::get('ticket/admin', 'AdminTicketController@index')->name('guzbyte.admin.ticket.index');
+        Route::post('ticket/admin/reply/{id}', 'AdminTicketController@reply')->name('guzbyte.ticket.admin.reply');
+        Route::get('ticket/admin/ticket/show/{id}/{slug}', 'AdminTicketController@showTicket')->name("guzbyte.admin.agent.ticket.show");
+        Route::get('ticket/admin/agent/close/{id}', 'AdminTicketController@closeTicket')->name('guzbyte.ticket.admin.close.ticket');
+        Route::get('ticket/admin/ticket/edit/{id}', 'AdminTicketController@edit')->name('guzbyte.admin.ticket.edit');
+        Route::patch('ticket/admin/ticket/update/{id}', 'AdminTicketController@update')->name('guzbyte.admin.ticket.update');
+        Route::get('ticket/admin/assign-agent/{agent_id}', 'AdminTicketController@assign')->name('guzbyte.admin.ticket.assign');
+        Route::patch('ticket/admin/assign-agent/{agent_id}', 'AdminTicketController@updateTicketAgent')->name('guzbyte.admin.ticket.update.agent.ticket');
+
+        //
+        Route::get("ticket/admin/ticket/open", 'AdminTicketController@openedTicket')->name("guzbyte.admin.ticket.opened");
+        Route::get("ticket/admin/ticket/close", 'AdminTicketController@closedTicket')->name("guzbyte.admin.ticket.closed");
+        Route::get("ticket/admin/ticket/all", 'AdminTicketController@allTicket')->name("guzbyte.admin.ticket.all");
+        Route::get("ticket/admin/ticket/new", 'AdminTicketController@new')->name("guzbyte.admin.ticket.new");
     });
 });
 

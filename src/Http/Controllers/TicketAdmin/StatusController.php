@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Guzbyte\Ticket\Models\TicketStatus;
 use Illuminate\Support\Facades\Validator;
+use Guzbyte\Ticket\Http\Controllers\BaseController;
 
-class StatusController extends Controller
+class StatusController extends BaseController
 {
     /**
      * Display a listing of the resource.

@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Guzbyte\Ticket\Models\TicketPriority;
 use Illuminate\Support\Facades\Validator;
+use Guzbyte\Ticket\Http\Controllers\BaseController;
 
 
-class PriorityController extends Controller
+class PriorityController extends BaseController
 {
     /**
      * Display a listing of the resource.

@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Guzbyte\Ticket\Models\TicketCategory;
 use Illuminate\Support\Facades\Validator;
+use Guzbyte\Ticket\Http\Controllers\BaseController;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.

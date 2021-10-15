@@ -15,8 +15,9 @@ use Guzbyte\Ticket\Models\TicketComment;
 use Guzbyte\Ticket\Models\TicketCategory;
 use Guzbyte\Ticket\Models\TicketPriority;
 use Illuminate\Support\Facades\Validator;
+use Guzbyte\Ticket\Http\Controllers\BaseController;
 
-class TicketAgentController extends Controller
+class TicketAgentController extends BaseController
 {
     public function index(){
         $id = TicketAgent::whereUserId(auth()->user()->id)->get()->first()->id;
@@ -40,6 +41,9 @@ class TicketAgentController extends Controller
         $comments = TicketComment::whereTicketId($id)->get();
         $priorities = TicketPriority::all();
         TicketComment::whereTicketId($id)->update([
+            "agent_read" => 1,
+        ]);
+        $ticket->update([
             "agent_read" => 1,
         ]);
         $ticketAgentCount = TicketComment::whereAgentId($id)->where("agent_read", 0)->count();

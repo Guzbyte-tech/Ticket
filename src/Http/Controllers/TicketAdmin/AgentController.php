@@ -4,12 +4,18 @@ namespace Guzbyte\Ticket\Http\Controllers\TicketAdmin;
 
 use App\User;
 use Illuminate\Http\Request;
+use Guzbyte\Ticket\Helper\Helper;
+use Guzbyte\Ticket\Models\Ticket;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Guzbyte\Ticket\Models\TicketAgent;
+use Guzbyte\Ticket\Models\TicketComment;
 use Guzbyte\Ticket\Models\TicketCategory;
+use Guzbyte\Ticket\Models\TicketPriority;
 use Illuminate\Support\Facades\Validator;
+use Guzbyte\Ticket\Http\Controllers\BaseController;
 
-class AgentController extends Controller
+class AgentController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -186,5 +192,22 @@ class AgentController extends Controller
             "success" => "Agent $agentName activated successfully"
         ]);
     }
+
+    public function getAgentTicket($agent_id){
+        $tickets = Ticket::whereAgentId($agent_id)->get();
+        $helper = new Helper();
+        $response = \collect();
+        foreach($tickets as $ticket){
+            $response->push($ticket->setAttribute("unread", $helper->unreadSuperAgentMessages($ticket->id)));
+        }
+        return view("ticket::ticket.admin.agent.tickets")->with([
+            "tickets" => $response,
+            "count" => 1,
+        ]);
+    }
+
+    
+
+    
     
 }

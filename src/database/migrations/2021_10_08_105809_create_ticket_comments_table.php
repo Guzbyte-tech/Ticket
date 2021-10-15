@@ -17,9 +17,9 @@ class CreateTicketCommentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger("ticket_id");
             $table->unsignedBigInteger("user_id")->nullable();
-            $table->unsignedBigInteger("agent_id");
+            $table->unsignedBigInteger("agent_id")->nullable();
             $table->boolean("is_super_agent")->nullable();
-            $table->string("attachment", 191);
+            $table->string("attachment", 191)->nullable();
             $table->boolean("user_read")->default(0);
             $table->boolean("agent_read")->default(0);
             $table->text("message");

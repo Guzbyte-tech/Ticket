@@ -43,7 +43,7 @@
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                                     <a href="{{ route("guzbyte.admin.ticket.agent.edit", $agent->id) }}" class="dropdown-item"><i class="fa fa-edit" ></i> Edit</a>
-                                                    <a href="" class="dropdown-item"><i class="fa fa-edit" ></i> View tickets</a>
+                                                    <a href="{{ route("guzbyte.admin.agent.ticket.all", [$agent->id]) }}" class="dropdown-item"><i class="fa fa-edit" ></i> View tickets</a>
                                                     @if ($agent->is_active == 1)
                                                         <a href="{{ route("guzbyte.admin.ticket.agent.deactivate", [$agent->id]) }}" class="dropdown-item"><i class="fa fa-toggle-off"></i> De-activate</a>
                                                     @else

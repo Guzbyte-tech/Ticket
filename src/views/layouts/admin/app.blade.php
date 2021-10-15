@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/summernote/summernote-bs4.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -98,11 +102,11 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a href="{{ route("guzbyte.admin.ticket.index") }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Tickets
-                <span class="badge badge-info right">2</span>
+                <span class="badge badge-info right">{{ $unreadTickets }}</span>
               </p>
             </a>
           </li>
@@ -188,7 +192,7 @@
               <p>
                 Agents
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <span class="badge badge-info right">{{ $agentCount }}</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -302,5 +306,39 @@
 <script src="{{ asset('guz_ticket/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('guz_ticket/dist/js/pages/dashboard.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('guz_ticket/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script>
+  $(function () {
+    // Summernote
+    $('#summernote').summernote({
+      height: 200,
+    })
+  })
+</script>
+<script>
+  $(function () {
+    // $("#datatable_print").DataTable({
+    //   "responsive": true, "lengthChange": false, "autoWidth": false,
+    //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#datatable').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 </body>
 </html>

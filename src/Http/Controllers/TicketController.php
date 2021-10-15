@@ -16,7 +16,7 @@ use Guzbyte\Ticket\Models\TicketPriority;
 use Illuminate\Support\Facades\Validator;
 use Guzbyte\Ticket\Models\TicketAttachment;
 
-class TicketController extends Controller
+class TicketController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -100,9 +100,17 @@ class TicketController extends Controller
 
         
 
-        $agentUserId = TicketAgent::find($assignedAgent)->user_id;
-        $agentEmail = User::find($agentUserId)->email;
-        $agentName = User::find($agentUserId)->name;
+        $agentEmail = $agentName = $agentUserId = "";
+         if(is_null($assignedAgent)){
+            $agentEmail = config("ticket.ticket_admin_email_address");
+            $agentName = config("ticket.ticket_admin_email_name");
+         }else{
+            $agentUserId = TicketAgent::find($assignedAgent)->user_id;
+            $agentEmail = User::find($agentUserId)->email;
+            $agentName = User::find($agentUserId)->name;
+         }
+
+        
         $content = [
             "ticket" => $ticket,
             "content" => $request->message,
@@ -197,8 +205,15 @@ class TicketController extends Controller
             "content" => $request->message,
             "agent" => User::find($ticket->agent_id)->name,
          ];
-         $agentEmail = User::find($ticket->agent_id)->email;
-         $agentName = User::find($ticket->agent_id)->name;
+         $agentEmail = $agentName = "";
+         if(is_null($ticket->agent_id)){
+            $agentEmail = config("ticket.ticket_admin_email_address");
+            $agentName = config("ticket.ticket_admin_email_name");
+         }else{
+            $agentEmail = User::find($ticket->agent_id)->email;
+            $agentName = User::find($ticket->agent_id)->name;
+         }
+         
          Mail::send('ticket::emails.agent-reply', $content, function($message) use ($ticket, $agentEmail) {
             $message->to($agentEmail, config("ticket.mail_from_name"))->subject
                ("New Ticket Re-".$ticket->title.'');
