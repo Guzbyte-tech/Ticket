@@ -2,7 +2,17 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
-    Route::group(['middleware' => ['web', 'auth', 'is_user']], function(){
+
+    Route::group(['middleware' => ['web']], function(){
+
+        Route::get('ticket/install', 'InstallController@index')->name('guzbyte.ticket.install');
+        Route::post('ticket/install', 'InstallController@process')->name('guzbyte.ticket.install.process');
+        Route::get('ticket/install-complete', 'InstallController@success')->name('guzbyte.ticket.install.success');
+
+    });
+});
+Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
+    Route::group(['middleware' => ['installer','web', 'auth', 'is_user']], function(){
         Route::get('ticket', 'TicketController@index')->name('guzbyte.ticket.index');
         Route::get('ticket/create', 'TicketController@create')->name('guzbyte.ticket.create');
         Route::post('ticket/store', 'TicketController@store')->name('guzbyte.ticket.store');
@@ -17,7 +27,7 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
 });
 //Ticket Agents
 Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAgent'], function(){
-    Route::group(['middleware' => ['web', 'auth', 'is_ticket_agent', 'isActiveAgent']], function(){
+    Route::group(['middleware' => ['installer', 'web', 'auth', 'is_ticket_agent', 'isActiveAgent']], function(){
         Route::get('ticket/agent', 'TicketAgentController@index')->name('guzbyte.agent.ticket.index');
         Route::get('ticket/agent/show/{id}/{slug}', 'TicketAgentController@show')->name('guzbyte.ticket.agent.show')->middleware(["is_agent"]);
         Route::post('ticket/agent/reply/{id}', 'TicketAgentController@reply')->name('guzbyte.ticket.agent.reply');
@@ -31,7 +41,7 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAgent'], fun
 
 //Ticket Manager
 Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAdmin'], function(){
-    Route::group(['middleware' => ['web', 'auth', 'is_ticket_super_admin']], function(){
+    Route::group(['middleware' => ['installer', 'web', 'auth', 'is_ticket_super_admin']], function(){
         //Category
         Route::get('ticket/admin/category', 'CategoryController@index')->name('guzbyte.admin.ticket.category');
         Route::get('ticket/admin/create', 'CategoryController@create')->name('guzbyte.admin.ticket.category.create');

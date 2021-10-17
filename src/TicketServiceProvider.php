@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Guzbyte\Ticket\Http\Middleware\IsUser;
 use Guzbyte\Ticket\Http\Middleware\checkUser;
+use Guzbyte\Ticket\Http\Middleware\Installer;
 use Guzbyte\Ticket\Http\Middleware\checkAgent;
 use Guzbyte\Ticket\Http\Middleware\IsAgentActive;
 use Guzbyte\Ticket\Http\Middleware\IsTicketAgent;
@@ -21,7 +22,7 @@ class TicketServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'ticket');
+        $this->mergeConfigFrom(__DIR__.'/config/ticket.php', 'ticket');
     }
 
     /**
@@ -42,10 +43,11 @@ class TicketServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         $this->publishes([
-            __DIR__.'/config/config.php' => config_path('config.php'),
+            __DIR__.'/config/ticket.php' => config_path('ticket.php'),
         ]);
 
         $router = $this->app->make(Router::class);
+
         $router->aliasMiddleware('is_ticket_super_admin', IsTicketSuperAdmin::class);
         $router->aliasMiddleware('is_ticket_agent', IsTicketAgent::class);
         $router->aliasMiddleware('is_user', IsUser::class);
@@ -53,6 +55,7 @@ class TicketServiceProvider extends ServiceProvider
         $router->aliasMiddleware('checkUser', checkUser::class);
         $router->aliasMiddleware('user_agent_access', GrantAgentUserAccess::class);
         $router->aliasMiddleware('isActiveAgent', IsAgentActive::class);
+        $router->aliasMiddleware('installer', Installer::class);
 
     }
 }
