@@ -55,7 +55,7 @@ class TicketAgentController extends BaseController
             "id" => $id,
             "slug" => $slug,
             "priority" => $priorities,
-            "name" => User::find($ticket->user_id)->name,
+            "name" => config('ticket.user')->find($ticket->user_id)->name,
             "email" => $ticket->email
         ]);
     }
@@ -80,7 +80,7 @@ class TicketAgentController extends BaseController
          $ticket = Ticket::find($id);
          $user_id = Ticket::find($id)->user_id;
          $slug = Ticket::find($id)->slug;
-         $user = User::find($user_id);
+         $user = config('ticket.user')->find($user_id);
          $agent_id = TicketAgent::whereUserId(auth()->user()->id)->get()->first()->id;
          TicketComment::create([
             "ticket_id" => $id,
@@ -102,7 +102,7 @@ class TicketAgentController extends BaseController
             "ticket" => Ticket::find($id),
             "user" => $user,
             "content" => $request->message,
-            "agent" => User::find($ticket->agent_id)->name,
+            "agent" => config('ticket.user')->find($ticket->agent_id)->name,
          ];
          Mail::send('ticket::emails.agent-reply', $content, function($message) use ($ticket) {
             $message->to($ticket->email, config("ticket.app_name"))->subject

@@ -82,10 +82,18 @@
                                             @endfor
                                         @endif
                                         </div>
-                                        
+                                        @if (is_null($ticket->agent_id))
                                         <small class="d-block w-100 mt-1">
-                                            {{ App\User::find($ticket->agent_id)->name }} <br>
-                                            <i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
+                                            {{ $adminId }} <br>
+                                            <i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i>
+                                        </small>
+                                        @else
+                                        <small class="d-block w-100 mt-1">
+                                            {{ config('ticket.user')->find(Guzbyte\Ticket\Models\TicketAgent::find($ticket->agent_id)->user_id)->name }} <br>
+                                            <i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i>
+                                        </small>    
+                                        @endif
+                                        
                                     </div>
                                 @else
 

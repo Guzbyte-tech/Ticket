@@ -34,7 +34,7 @@
                                @foreach ($agents as $agent)
                                     <tr>
                                         <td class="text-center">{{ $count++ }}</td>
-                                        <td class="text-center">{{ \App\User::find($agent->user_id)->name }}</td>
+                                        <td class="text-center">{{ config('ticket.user')->find($agent->user_id)->name }}</td>
                                         <td class="text-center">{{ \Guzbyte\Ticket\Models\TicketCategory::find($agent->category)->name }}</td>
                                         <td class="text-center">
                                             <div class="dropdown dropright">

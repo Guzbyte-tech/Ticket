@@ -29,7 +29,7 @@ class AdminTicketController extends BaseController
             $response->push($ticket->setAttribute("detail", [
                 "unread" => $helper->unreadSuperAgentMessages($ticket->id),
                 "agent_name" => $helper->getAgent($ticket->agent_id),
-                "user" => User::find($ticket->user_id)->name
+                "user" => config('ticket.user')->find($ticket->user_id)->name
             ]));
         }
 
@@ -64,7 +64,7 @@ class AdminTicketController extends BaseController
             "id" => $id,
             "slug" => $slug,
             "priority" => $priorities,
-            "name" => User::find($ticket->user_id)->name,
+            "name" => config('ticket.user')->find($ticket->user_id)->name,
             "email" => $ticket->email
         ]);
     }
@@ -89,7 +89,7 @@ class AdminTicketController extends BaseController
          $ticket = Ticket::find($id);
          $user_id = Ticket::find($id)->user_id;
          $slug = Ticket::find($id)->slug;
-         $user = User::find($user_id);
+         $user = config('ticket.user')->find($user_id);
          
          TicketComment::create([
             "ticket_id" => $id,
@@ -196,8 +196,8 @@ class AdminTicketController extends BaseController
         ]);
 
         $ticketAgentCount = TicketComment::whereAgentId($id)->where("agent_read", 0)->count();
-        $agentName = User::find(TicketAgent::find($assignedAgent)->user_id)->name;
-        $agentEmail = User::find(TicketAgent::find($assignedAgent)->user_id)->email;
+        $agentName = config('ticket.user')->find(TicketAgent::find($assignedAgent)->user_id)->name;
+        $agentEmail = config('ticket.user')->find(TicketAgent::find($assignedAgent)->user_id)->email;
         
         if($oldAgent !== $assignedAgent){
             //return "jam here";
@@ -237,8 +237,8 @@ class AdminTicketController extends BaseController
         $validator->validate();
         $ticket = Ticket::findOrFail($ticket_id);
         $ticketAgent = TicketAgent::findorFail($request->agent);
-        $agentEmail = User::find($ticketAgent->user_id)->email;
-        $agentName = User::find($ticketAgent->user_id)->name;
+        $agentEmail = config('ticket.user')->find($ticketAgent->user_id)->email;
+        $agentName = config('ticket.user')->find($ticketAgent->user_id)->name;
 
 
         $ticket->update([
@@ -247,7 +247,7 @@ class AdminTicketController extends BaseController
         $content = [
             "ticket" => $ticket,
             "content" => $ticket->message,
-            "agent" => User::find($ticketAgent->user_id)->name,
+            "agent" => config('ticket.user')->find($ticketAgent->user_id)->name,
          ];
 
         Mail::send('ticket::emails.agent-reply', $content, function($message) use ($agentEmail, $agentName, $ticket) {
@@ -268,7 +268,7 @@ class AdminTicketController extends BaseController
             $response->push($ticket->setAttribute("detail", [
                 "unread" => $helper->unreadSuperAgentMessages($ticket->id),
                 "agent_name" => $helper->getAgent($ticket->agent_id),
-                "user" => User::find($ticket->user_id)->name
+                "user" => config('ticket.user')->find($ticket->user_id)->name
             ]));
         }
 
@@ -290,7 +290,7 @@ class AdminTicketController extends BaseController
             $response->push($ticket->setAttribute("detail", [
                 "unread" => $helper->unreadSuperAgentMessages($ticket->id),
                 "agent_name" => $helper->getAgent($ticket->agent_id),
-                "user" => User::find($ticket->user_id)->name
+                "user" => config('ticket.user')->find($ticket->user_id)->name
             ]));
         }
 
@@ -312,7 +312,7 @@ class AdminTicketController extends BaseController
             $response->push($ticket->setAttribute("detail", [
                 "unread" => $helper->unreadSuperAgentMessages($ticket->id),
                 "agent_name" => $helper->getAgent($ticket->agent_id),
-                "user" => User::find($ticket->user_id)->name
+                "user" => config('ticket.user')->find($ticket->user_id)->name
             ]));
         }
 
@@ -334,7 +334,7 @@ class AdminTicketController extends BaseController
             $response->push($ticket->setAttribute("detail", [
                 "unread" => $helper->unreadSuperAgentMessages($ticket->id),
                 "agent_name" => $helper->getAgent($ticket->agent_id),
-                "user" => User::find($ticket->user_id)->name
+                "user" => config('ticket.user')->find($ticket->user_id)->name
             ]));
         }
 

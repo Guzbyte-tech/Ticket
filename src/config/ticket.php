@@ -1,4 +1,7 @@
 <?php
+
+    
+    $user = new App\User; //If you have a different class add it here
     return [
         "mail_from" => env("MAIL_FROM_ADDRESS"),
         "app_name" => "ticket",
@@ -12,6 +15,9 @@
         
         //This is the email name you get replys to when ticket is not assigned to an agent
         "ticket_admin_email_name" => "Ticket Manager",
+
+        //User Model Class
+        "user" => $user
 
         
     ];

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class InstallController extends BaseController
 {
     public function index(){
-        if(User::whereTicketSuperAdmin(1)->count() > 0){
+        if(config('ticket.user')->whereTicketSuperAdmin(1)->count() > 0){
             return redirect()->route("guzbyte.ticket.install.success");
         }
         return view("ticket::ticket.install");
@@ -19,16 +19,16 @@ class InstallController extends BaseController
         $validator = Validator::make($request->all(), [
             "email" => ["required", "email"]
         ]);
-        if(!User::whereEmail($request->email)->exists()){
+        if(!config('ticket.user')->whereEmail($request->email)->exists()){
             $validator->after(function($validator) use ($request){
                 $validator->errors()->add("email", "No user found with this email address");
             });
         }
         $validator->validate();
-        User::query()->update([
+        config('ticket.user')->query()->update([
             "ticket_super_admin" => false,
         ]);
-        User::whereEmail($request->email)->update([
+        config('ticket.user')->whereEmail($request->email)->update([
             "ticket_super_admin" => true,
         ]);
 

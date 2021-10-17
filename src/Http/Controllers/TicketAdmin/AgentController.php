@@ -57,7 +57,7 @@ class AgentController extends BaseController
             "category" => ["required"]
         ]);
         $email = $request->email;
-        $user = User::whereEmail($email)->get()->first();
+        $user = config('ticket.user')->whereEmail($email)->get()->first();
         $validator->after(function($validator) use ($request, $user, $email){
             if(is_null($user)){
                 $validator->errors()->add("email", "User not found");
@@ -73,7 +73,7 @@ class AgentController extends BaseController
             
         });
         $validator->validate();
-        User::whereEmail($email)->update([
+        config('ticket.user')->whereEmail($email)->update([
             "ticket_sub_admin" => true
         ]);
         TicketAgent::create([
@@ -109,7 +109,7 @@ class AgentController extends BaseController
         return view("ticket::ticket.admin.agent.edit")->with([
             "agent" => $agent,
             "categories" => $category,
-            "email" => User::find($agent->user_id)->email,
+            "email" => config('ticket.user')->find($agent->user_id)->email,
         ]);
     }
 
@@ -127,7 +127,7 @@ class AgentController extends BaseController
             "category" => ["required"]
         ]);
         $email = $request->email;
-        $user = User::whereEmail($email)->get()->first();
+        $user = config('ticket.user')->whereEmail($email)->get()->first();
         $agents = TicketAgent::find($id);
         $validator->after(function($validator) use ($request, $user, $email, $id, $agents){
             if(is_null($user)){
@@ -148,7 +148,7 @@ class AgentController extends BaseController
             
         });
         $validator->validate();
-        User::whereEmail($email)->update([
+        config('ticket.user')->whereEmail($email)->update([
             "ticket_sub_admin" => true
         ]);
         TicketAgent::findOrFail($id)->update([
@@ -173,7 +173,7 @@ class AgentController extends BaseController
 
     public function deactivate($id){
         $agent = TicketAgent::findOrFail($id)->user_id;
-        $agentName = User::findOrFail($agent)->name;
+        $agentName = config('ticket.user')->findOrFail($agent)->name;
         TicketAgent::findOrFail($id)->update([
             "is_active" => false
         ]);
@@ -184,7 +184,7 @@ class AgentController extends BaseController
 
     public function activate($id){
         $agent = TicketAgent::findOrFail($id)->user_id;
-        $agentName = User::findOrFail($agent)->name;
+        $agentName = config('ticket.user')->findOrFail($agent)->name;
         TicketAgent::findOrFail($id)->update([
             "is_active" => true
         ]);

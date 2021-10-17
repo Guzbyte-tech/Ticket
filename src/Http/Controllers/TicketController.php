@@ -26,6 +26,7 @@ class TicketController extends BaseController
     public function index()
     {
         $tickets = Ticket::whereUserId(auth()->user()->id)->orderBy("id", "desc")->get();
+        $adminTicket = config('ticket.user')->whereTicketSuperAdmin(1)->get()->first()->name;
         $helper = new Helper();
         $response = \collect();
         foreach($tickets as $ticket){
@@ -37,6 +38,7 @@ class TicketController extends BaseController
             "count" => 1,
             "ticketCount" => $ticketCount,
             "tickets" => $response,
+            "adminId" => $adminTicket
         ]);
     }
 
@@ -106,8 +108,8 @@ class TicketController extends BaseController
             $agentName = config("ticket.ticket_admin_email_name");
          }else{
             $agentUserId = TicketAgent::find($assignedAgent)->user_id;
-            $agentEmail = User::find($agentUserId)->email;
-            $agentName = User::find($agentUserId)->name;
+            $agentEmail = config('ticket.user')->find($agentUserId)->email;
+            $agentName = config('ticket.user')->find($agentUserId)->name;
          }
 
         
@@ -144,10 +146,12 @@ class TicketController extends BaseController
         $ticket = Ticket::findOrFail($id);
         $ticketCount = TicketComment::whereUserId(auth()->user()->id)->where("user_read", 0)->count();
         $ticketComments = TicketComment::whereTicketId($id)->get();
+        $adminTicket = config('ticket.user')->whereTicketSuperAdmin(1)->get()->first()->name;
         $priorities = TicketPriority::all();
         TicketComment::whereTicketId($id)->update([
             "user_read" => 1,
         ]);
+
         return \view("ticket::ticket.users.show")->with([
             "ticket" => $ticket,
             "ticketCount" => $ticketCount,
@@ -157,6 +161,7 @@ class TicketController extends BaseController
             "id" => $id,
             "slug" => $slug,
             "priority" => $priorities,
+            "adminId" => $adminTicket
         ]);
     }
 
@@ -182,7 +187,7 @@ class TicketController extends BaseController
          $ticket = Ticket::find($id);
          $user_id = Ticket::find($id)->user_id;
          $slug = Ticket::find($id)->slug;
-         $user = User::find($user_id);
+         $user = config('ticket.user')->find($user_id);
          TicketComment::create([
             "ticket_id" => $id,
             "user_id" => $user_id,
@@ -198,20 +203,20 @@ class TicketController extends BaseController
                 "priority_id" => $request->priority
             ]);
          }
-
+         $agentUserId = TicketAgent::find($ticket->agent_id)->user_id;
          $content = [
             "ticket" => Ticket::find($id),
             "user" => $user,
             "content" => $request->message,
-            "agent" => User::find($ticket->agent_id)->name,
+            "agent" => config('ticket.user')->find($agentUserId)->name,
          ];
          $agentEmail = $agentName = "";
          if(is_null($ticket->agent_id)){
             $agentEmail = config("ticket.ticket_admin_email_address");
             $agentName = config("ticket.ticket_admin_email_name");
          }else{
-            $agentEmail = User::find($ticket->agent_id)->email;
-            $agentName = User::find($ticket->agent_id)->name;
+            $agentEmail = config('ticket.user')->find($agentUserId)->email;
+            $agentName = config('ticket.user')->find($agentUserId)->name;
          }
          
          Mail::send('ticket::emails.agent-reply', $content, function($message) use ($ticket, $agentEmail) {
