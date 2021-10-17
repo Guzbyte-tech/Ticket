@@ -252,7 +252,7 @@ class AdminTicketController extends BaseController
 
         Mail::send('ticket::emails.agent-reply', $content, function($message) use ($agentEmail, $agentName, $ticket) {
             $message->to($agentEmail, $agentName)->subject
-               ("New Ticket Assigned - ".$ticket->message);
+               ("New Ticket Assigned - ".$ticket->title);
             $message->from(config("ticket.mail_from"), config("ticket.app_name"));
          });
          return redirect()->route("guzbyte.admin.ticket.index")->with([

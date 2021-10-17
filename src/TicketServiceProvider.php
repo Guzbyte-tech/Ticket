@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Guzbyte\Ticket\Http\Middleware\IsUser;
 use Guzbyte\Ticket\Http\Middleware\checkUser;
 use Guzbyte\Ticket\Http\Middleware\checkAgent;
+use Guzbyte\Ticket\Http\Middleware\IsAgentActive;
 use Guzbyte\Ticket\Http\Middleware\IsTicketAgent;
 use Guzbyte\Ticket\Http\Middleware\IsTicketSuperAdmin;
 use Guzbyte\Ticket\Http\Middleware\GrantAgentUserAccess;
@@ -51,6 +52,7 @@ class TicketServiceProvider extends ServiceProvider
         $router->aliasMiddleware('is_agent', checkAgent::class);
         $router->aliasMiddleware('checkUser', checkUser::class);
         $router->aliasMiddleware('user_agent_access', GrantAgentUserAccess::class);
+        $router->aliasMiddleware('isActiveAgent', IsAgentActive::class);
 
     }
 }

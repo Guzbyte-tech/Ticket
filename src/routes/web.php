@@ -17,7 +17,7 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers'], function(){
 });
 //Ticket Agents
 Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAgent'], function(){
-    Route::group(['middleware' => ['web', 'auth', 'is_ticket_agent']], function(){
+    Route::group(['middleware' => ['web', 'auth', 'is_ticket_agent', 'isActiveAgent']], function(){
         Route::get('ticket/agent', 'TicketAgentController@index')->name('guzbyte.agent.ticket.index');
         Route::get('ticket/agent/show/{id}/{slug}', 'TicketAgentController@show')->name('guzbyte.ticket.agent.show')->middleware(["is_agent"]);
         Route::post('ticket/agent/reply/{id}', 'TicketAgentController@reply')->name('guzbyte.ticket.agent.reply');
@@ -49,12 +49,12 @@ Route::group(['namespace' => 'Guzbyte\Ticket\Http\Controllers\TicketAdmin'], fun
         Route::get('ticket/admin/priority/delete/{id}', 'PriorityController@destroy')->name('guzbyte.admin.ticket.priority.delete');
 
         //Status
-        Route::get('ticket/admin/status', 'StatusController@index')->name("guzbyte.admin.ticket.status.index");
-        Route::get('ticket/admin/status/create', 'StatusController@create')->name("guzbyte.admin.ticket.status.create");
-        Route::post('ticket/admin/status/store', 'StatusController@store')->name("guzbyte.admin.ticket.status.store");
-        Route::get('ticket/admin/status/edit/{id}', 'StatusController@edit')->name('guzbyte.admin.ticket.status.edit');
-        Route::patch('ticket/admin/status/update/{id}', 'StatusController@update')->name('guzbyte.admin.ticket.status.update');
-        Route::get('ticket/admin/status/delete/{id}', 'StatusController@destroy')->name('guzbyte.admin.ticket.status.delete');
+        // Route::get('ticket/admin/status', 'StatusController@index')->name("guzbyte.admin.ticket.status.index");
+        // Route::get('ticket/admin/status/create', 'StatusController@create')->name("guzbyte.admin.ticket.status.create");
+        // Route::post('ticket/admin/status/store', 'StatusController@store')->name("guzbyte.admin.ticket.status.store");
+        // Route::get('ticket/admin/status/edit/{id}', 'StatusController@edit')->name('guzbyte.admin.ticket.status.edit');
+        // Route::patch('ticket/admin/status/update/{id}', 'StatusController@update')->name('guzbyte.admin.ticket.status.update');
+        // Route::get('ticket/admin/status/delete/{id}', 'StatusController@destroy')->name('guzbyte.admin.ticket.status.delete');
 
         //Agents
         Route::get('ticket/admin/agents', 'AgentController@index')->name("guzbyte.admin.ticket.agent.index");
