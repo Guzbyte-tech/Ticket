@@ -15,5 +15,12 @@
         "psr-4": {
             "Guzbyte\\Ticket\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Guzbyte\\Ticket\\TicketServiceProvider"
+            ]
+        }
     }
 }
