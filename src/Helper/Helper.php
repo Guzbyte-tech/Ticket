@@ -25,7 +25,7 @@ class Helper{
         if(is_null($user_id)){
             return "NA";
         }
-        $user = User::find($user_id->user_id);
+        $user = config('ticket.user')->find($user_id->user_id);
         return $user->name;
     }
 
