@@ -66,9 +66,8 @@
                                  <br>
                                      <small><i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
                                  </div>
-                            
                             @else
-                                <div class="mb-3 p-3"  style="width: 90%; float: right; border-radius: 10px; background-color: #dbf3c6; color: #5c6356; text-align:right">
+                                <div class="mb-3 p-3"  style="width: 90%; float: right; border-radius: 10px; background-color: #dbf3c6; color: #5c6356;">
                                     {!! $comment->message !!}
                                     @if (count(json_decode($comment->attachment, true)) > 0)
                                         <span class="font-weight-bold">Attachment</span> <br>
@@ -79,12 +78,8 @@
                                     <br>
                                     <small class="float-right"><i> {{ date("M d, Y h:i:s a", strtotime($ticket->created_at)) }}</i></small>
                                 </div>
-                                
                             @endif
                         @endforeach
-                        
-
-                        
                     </div>
                 </div>
                 @if ($ticket->status_id == 1)
