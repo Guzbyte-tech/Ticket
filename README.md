@@ -37,10 +37,11 @@ Step 3. **(only for laravel 8)** Goto Vendor/guzbyte/ticket/src/config/ticket.ph
 	$user  = new App\Models\User;
 </code>
 <br>
-STep 4. Publish the package
+Step 4. Publish the package
 <code> 
 	php artisan vendor:publish
 </code>
+<br>
 **Note** You can edit this to match your Users Model namespace not just for Laravel 8<br>
 Step 5. Make sure authentication scalffolding is already active.<br>
 Step 6. Register at least one or more user into the system.<br>
