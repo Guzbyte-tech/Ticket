@@ -44,6 +44,10 @@ Step 4. Publish the package
 <br>
 **Note** You can edit this to match your Users Model namespace not just for Laravel 8<br>
 Step 5. Make sure authentication scalffolding is already active.<br>
+Step 6. Run Migration. <br>
+<code> 
+	php artisan migrate
+</code>
 Step 6. Register at least one or more user into the system.<br>
 Step 7. Run the installation route. https://your-website.com/ticket/install<br>
 Step 8. Enter the email you want to be the main adminstrator of the system.<br>
