@@ -28,22 +28,23 @@ A ticketing system is **a management tool that processes and catalogs customer s
 
 ## Installation
 The installation process is very easy.
-Step 1. Run the following code in terminal
-<code>composer require guzbyte/ticket</code>
-Step 2. After install, you have to add this line on your `config/app.php` in Service Providers section
-<code>Guzbyte\Ticket\TicketServiceProvider::class</code>
-Step 3. **(only for laravel 8)** Goto Vendor/guzbyte/ticket/src/config/ticket.php  edit the $users variable to 
+Step 1. Run the following code in terminal<br>
+<code>composer require guzbyte/ticket</code> <br>
+Step 2. After install, you have to add this line on your `config/app.php` in Service Providers section<br>
+<code>Guzbyte\Ticket\TicketServiceProvider::class</code><br>
+Step 3. **(only for laravel 8)** Goto Vendor/guzbyte/ticket/src/config/ticket.php  edit the $users variable to <br>
 <code> 
 	$user  = new App\Models\User;
 </code>
-**Note** You can edit this to match your Users Model namespace not just for Laravel 8
-Step 4. Make sure authentication scalffolding is already active.
-Step 5. Register at least one or more user into the system.
-Step 6. Run the installation route. https://your-website.com/ticket/install
-Step 7. Enter the email you want to be the main adminstrator of the system.
-** THATS IT !!!**
+<br>
+**Note** You can edit this to match your Users Model namespace not just for Laravel 8<br>
+Step 4. Make sure authentication scalffolding is already active.<br>
+Step 5. Register at least one or more user into the system.<br>
+Step 6. Run the installation route. https://your-website.com/ticket/install<br>
+Step 7. Enter the email you want to be the main adminstrator of the system.<br>
+** THATS IT !!!**<br>
 
-Default Routes
-Users: https://your-website.com/ticket
-Agents: https://your-website.com/ticket/agent
-Admin: https://your-website.com/ticket/admin
+Default Routes<br>
+Users: https://your-website.com/ticket<br>
+Agents: https://your-website.com/ticket/agent<br>
+Admin: https://your-website.com/ticket/admin<br>
