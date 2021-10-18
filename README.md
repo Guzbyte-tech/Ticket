@@ -47,4 +47,4 @@ Step 7. Enter the email you want to be the main adminstrator of the system.<br>
 Default Routes<br>
 Users: https://your-website.com/ticket<br>
 Agents: https://your-website.com/ticket/agent<br>
-Admin: https://your-website.com/ticket/admin<br><br>
+Admin: https://your-website.com/ticket/admin<br><br><br>
