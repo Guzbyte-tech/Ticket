@@ -32,22 +32,26 @@ Step 1. Run the following code in terminal<br>
 <code>composer require guzbyte/ticket</code> <br>
 Step 2. After install, you have to add this line on your `config/app.php` in Service Providers section<br>
 <code>Guzbyte\Ticket\TicketServiceProvider::class</code><br>
-Step 3. **(only for laravel 8)** Goto Vendor/guzbyte/ticket/src/config/ticket.php  edit the $users variable to <br>
+Step 3. **(only for laravel 8)** Goto Vendor/guzbyte/ticket/src/config/ticket.php  edit the $users variable to <br><br>
 <code> 
 	$user  = new App\Models\User;
 </code>
+<br>
 <br>
 Step 4. Publish the package
 <code> 
 	php artisan vendor:publish
 </code>
 <br>
+<br>
 **Note** You can edit this to match your Users Model namespace not just for Laravel 8<br>
 Step 5. Make sure authentication scalffolding is already active.<br>
-Step 6. Run Migration. <br>
+Step 6. Run Migration. <br><br>
 <code> 
 	php artisan migrate
 </code>
+<br>
+
 Step 6. Register at least one or more user into the system.<br>
 Step 7. Run the installation route. https://your-website.com/ticket/install<br>
 Step 8. Enter the email you want to be the main adminstrator of the system.<br>
