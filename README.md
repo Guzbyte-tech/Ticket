@@ -1,4 +1,4 @@
-# Guzbyte Ticket V1.0.0
+# Guzbyte Ticket V1.0.1
 
 This is is simple laravel ticket package system that manages your ticketing system in your platform. This packages is Laravel 5+ to 8.  This packages leverages on the Laravel default User and Authentication class. This packages has its own routes with prefix "/ticket".
 
