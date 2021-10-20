@@ -23,8 +23,8 @@
 
                         <div class="alert alert-success">
                             Installation Complete <br>
-                            For admin url: {{ env("APP_URL")."/admin/ticket" }} <br>
-                            For Agent url: {{ env("APP_URL")."/agent/ticket" }} <br>
+                            For admin url: {{ env("APP_URL")."/ticket/admin" }} <br>
+                            For Agent url: {{ env("APP_URL")."/ticket/agent" }} <br>
                             For User url: {{ env("APP_URL")."/ticket" }} <br>
                         </div>
 
