@@ -17,7 +17,7 @@ class Installer
     public function handle($request, Closure $next)
     {
         $install = config('ticket.user')->whereTicketSuperAdmin(1)->count();
-        if($install !== 1){
+        if($install == 0){
             return \redirect()->route("guzbyte.ticket.install");
         }
         return $next($request);

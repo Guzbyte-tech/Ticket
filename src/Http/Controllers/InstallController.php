@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Validator;
 class InstallController extends BaseController
 {
     public function index(){
-        if(config('ticket.user')->whereTicketSuperAdmin(1)->count() > 0){
-            return redirect()->route("guzbyte.ticket.install.success");
+        if(config('ticket.user')->whereTicketSuperAdmin(1)->count() == 0){
+
+            return view("ticket::ticket.install");
         }
-        return view("ticket::ticket.install");
+
+        return redirect()->route("guzbyte.ticket.install.success");
     }
 
     public function process(Request $request){
