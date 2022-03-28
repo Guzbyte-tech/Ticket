@@ -11,18 +11,9 @@
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/jqvmap/jqvmap.min.css') }}">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('guz_ticket/dist/css/adminlte.min.css') }}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('guz_ticket/plugins/summernote/summernote-bs4.min.css') }}">
 
@@ -186,36 +177,12 @@
 
 <!-- jQuery -->
 <script src="{{ asset('guz_ticket/plugins/jquery/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('guz_ticket/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('guz_ticket/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('guz_ticket/plugins/chart.js/Chart.min.js') }}"></script>
-<!-- Sparkline -->
-<script src="{{ asset('guz_ticket/plugins/sparklines/sparkline.js') }}"></script>
-<!-- JQVMap -->
-<script src="{{ asset('guz_ticket/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('guz_ticket/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{ asset('guz_ticket/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-<!-- daterangepicker -->
-<script src="{{ asset('guz_ticket/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('guz_ticket/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset('guz_ticket/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
 <script src="{{ asset('guz_ticket/plugins/summernote/summernote-bs4.min.js') }}"></script>
-<!-- overlayScrollbars -->
-<script src="{{ asset('guz_ticket/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('guz_ticket/dist/js/adminlte.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('guz_ticket/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('guz_ticket/dist/js/pages/dashboard.js') }}"></script>
 <script src="{{ asset('guz_ticket/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -224,7 +191,6 @@
 <script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('guz_ticket/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('guz_ticket/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('guz_ticket/plugins/jszip/jszip.min.js') }}"></script>
 <script src="{{ asset('guz_ticket/plugins/pdfmake/pdfmake.min.js') }}"></script>
 <script src="{{ asset('guz_ticket/plugins/pdfmake/vfs_fonts.js') }}"></script>
 
